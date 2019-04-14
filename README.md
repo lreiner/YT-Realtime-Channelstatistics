@@ -37,19 +37,19 @@ Now your Websocket is running and listen to port 3000
 
 ## How to connect client to websocket?
 First import socket.io js file in your project for example like this
-```
+```javascript
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 ```
 Now connect to your socket 
-```
+```javascript
 var socket = io('localhost:3000');
 ```
 Connect to a youtuber room (Just put any channelID of the youtuber you want). Same function if you want to switch to another youtuber
-```
+```javascript
 socket.emit('room', 'UC-lHJZR3Gqxm24_Vd_AJ5Yw');
 ```
 Get Channel Data of this room. Just pass the same channelID to this function
-```
+```javascript
 socket.on('UC-lHJZR3Gqxm24_Vd_AJ5Yw', function(channeldata) {
    console.log(channeldata); // object with channel data :-)
 });
