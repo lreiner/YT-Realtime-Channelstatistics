@@ -17,12 +17,13 @@ io.on('connection', function(socket){
     socket.on('room', function(room) {
         console.log('User switched to ' + room);
         socket.leave(socket.room);
-        socket.join(room);
-        socket.room = room;
 
         if(!(io.sockets.adapter.rooms.hasOwnProperty(room))) {
             sendToRoom(room);
         }
+
+        socket.join(room);
+        socket.room = room;
     });
   
     socket.on('disconnect', function(){
@@ -31,7 +32,7 @@ io.on('connection', function(socket){
 });
 
 /**
- * Push Channel Statistics into Channel Room with a specified intervall
+ * Push Channel Statistics into Channel Room with a specified interval
  * @param room -> roomID (Channel ID) user switched to 
  */
 function sendToRoom(room) {
