@@ -19,6 +19,42 @@ We do not accept responsibility for banned accounts or penalties of any kind cau
 </table>
 
 
+## Example Output
+Example output for PewDiePie Statistics. In this example the client is connected to the room: UC-lHJZR3Gqxm24_Vd_AJ5Yw (PewDiePies Channel ID). Note: Gif Output is just an example. It can be different in newer versions of this repo!
+
+![](example.gif)
+
+## How to start?
+Download this project into you folder and run
+```
+npm install
+```
+After that run index.js file to start the websocket
+```
+node index.js
+```
+Now your Websocket is running and listen to port 3000
+
+## How to connect client to websocket?
+First import socket.io js file in your project for example like this
+```
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+```
+Now connect to your socket 
+```
+var socket = io('localhost:3000');
+```
+Connect to a youtuber room (Just put any channelID of the youtuber you want). Same function if you want to switch to another youtuber
+```
+socket.emit('room', 'UC-lHJZR3Gqxm24_Vd_AJ5Yw');
+```
+Get Channel Data of this room. Just pass the same channelID to this function
+```
+socket.on('UC-lHJZR3Gqxm24_Vd_AJ5Yw', function(channeldata) {
+   console.log(channeldata); // object with channel data :-)
+});
+```
+
 ## Donation [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/LukasReiner/) 
 If this project help you reduce time to develop, you can give me a cup of coffee (or a Beer of course) :)
 
