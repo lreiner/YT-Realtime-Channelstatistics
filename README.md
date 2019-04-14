@@ -24,6 +24,7 @@ Example output for PewDiePie Statistics. In this example the client is connected
 
 ![](example.gif)
 
+
 ## How to start?
 Download this project into you folder and run
 ```
@@ -34,6 +35,7 @@ After that run index.js file to start the websocket
 node index.js
 ```
 Now your Websocket is running and listen to port 3000
+
 
 ## How to connect client to websocket?
 First import socket.io js file in your project for example like this
@@ -55,10 +57,12 @@ socket.on('UC-lHJZR3Gqxm24_Vd_AJ5Yw', function(channeldata) {
 });
 ```
 
+
 ## Donation [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/LukasReiner/) 
 If this project help you reduce time to develop, you can give me a cup of coffee (or a Beer of course) :)
 
 [![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/LukasReiner/) 
+
 
 ## Git - Fork
 
