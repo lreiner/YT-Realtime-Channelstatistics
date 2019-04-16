@@ -86,7 +86,7 @@ export class ChannelStatisticsProvider {
    * Connect to a specified room
    * @param room -> channel id of your selected youtuber
    */
-  setRoom(room:string){
+  public setRoom(room:string){
     this.socket.emit("room", room);
     this.room = room;
   }
