@@ -51,7 +51,7 @@ function sendToRoom(room) {
  * @return callback -> object with channel statistics
  */
 function getChannelStats(channelID, callback) {
-    var channelStatistics = {subcount: '', viewcount: ''};
+    var channelStatistics = {subcount: '', viewcount: '', cid: channelID};
 
     request({uri: "http://youtube.com/channel/" + channelID}, function(error, response, body) {
         if(body) {
