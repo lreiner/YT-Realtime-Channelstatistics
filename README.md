@@ -3,8 +3,7 @@
 <tr>
 <td>
 Websocket Server to push out Youtube Channel Data and Statistics in Realtime. Free to use for everyone!  🖨
-This Websocket let clients connect to rooms (Youtube Channel IDs) for every youtuber they want. In this rooms they get constant updates about channel statistics and data!
-Users can only be connected to one room, but also they can switch between each room.
+This Websocket let clients connect to rooms (Youtube Channel IDs) for every youtuber they want. In this rooms they get constant updates about channel statistics and data! Clients can only be connected to one room. 
 </tr>
 </table>
 
@@ -20,13 +19,13 @@ We do not accept responsibility for banned accounts or penalties of any kind cau
 
 
 ## Example Output
-Example output for PewDiePie Statistics. In this example the client is connected to the room: UC-lHJZR3Gqxm24_Vd_AJ5Yw (PewDiePies Channel ID). Note: Gif Output is just an example. It can be different in newer versions of this repo!
+Example output for PewDiePie's statistics. In this example the client is connected to the room: UC-lHJZR3Gqxm24_Vd_AJ5Yw (PewDiePie's channel id). Note: This gif output is just an example. It can be different in newer versions of this repo!
 
 ![](example.gif)
 
 
-## How to start?
-Download this project into you folder and run
+## Starting the Websocket
+Download this project into your folder and run
 ```
 npm install
 ```
@@ -37,24 +36,90 @@ node index.js
 Now your Websocket is running and listen to port 3000
 
 
-## How to connect client to websocket?
-First import socket.io js file in your project for example like this
+## Connect Client and receive Data with pure JS
+First import socket.io js file in your project like this
 ```javascript
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 ```
-Now connect to your socket 
+Now connect to your websocket
 ```javascript
 var socket = io('localhost:3000');
 ```
-Connect to a youtuber room (Just put any channelID of the youtuber you want). Same function if you want to switch to another youtuber
+Connect to a youtuber room (use the channel id of your selected youtuber). Same goes for switching to another youtuber
 ```javascript
 socket.emit('room', 'UC-lHJZR3Gqxm24_Vd_AJ5Yw');
 ```
-Get Channel Data of this room. Just pass the same channelID to this function
+Get the channel data of this room. Just pass the same channel id like before to this function
 ```javascript
 socket.on('UC-lHJZR3Gqxm24_Vd_AJ5Yw', function(channeldata) {
    console.log(channeldata); // object with channel data :-)
 });
+```
+
+## Connect Client and receive Data with Angular 5.2.11 and RXJS 5.5.11
+First install socket.io-client into your project
+```javascript
+npm install socket.io-client --save
+```
+Now create a provider/service for your project. Here is an example using the [Ionic Framework](https://ionicframework.com/)
+```javascript
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
+import * as socketIo from 'socket.io-client';
+
+@Injectable()
+export class ChannelStatisticsProvider {
+
+  private url:string = "http://localhost:3000";
+  private room:string = "";
+  private socket;
+
+  /**
+   * Connect to your Websocket
+   */
+  constructor() {
+    this.socket = socketIo(this.url);
+  }
+
+  /**
+   * Connect to a specified room
+   * @param room -> channel id of your selected youtuber
+   */
+  setRoom(room:string){
+    this.socket.emit("room", room);
+    this.room = room;
+  }
+
+  /**
+   * Get Data from this room 
+   * Observable to subscribe to your data and pass it to another function
+   */
+  public onUpdate(): Observable<object> {
+    return new Observable<object> (observer => {
+      this.socket.on(this.room, (data:object) => {
+        observer.next(data);
+      })
+    });
+  }
+}
+```
+To use this provider anywhere in your project just inport it and declare it in your constructor like this:
+```javascript
+import { ChannelStatisticsProvider } from '../../providers/channelstatistics/channelstatistics';
+
+constructor(public channelProv: ChannelStatisticsProvider) {}
+```
+Now you can join a room or change to another room like this anywhere in your project:
+```javascript
+this.channelProv.setRoom("UC-lHJZR3Gqxm24_Vd_AJ5Yw");
+```
+And to get the data just subscribe to your onUpdate function like this
+```javascript
+this.channelProv.onUpdate().subscribe((data) => {
+   //Object with channel statistics :) Every time you get a new update
+   console.log("youtubechanneldata", data); 
+})
 ```
 
 
