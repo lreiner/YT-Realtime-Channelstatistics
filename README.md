@@ -1,4 +1,4 @@
-# Youtube API Websocket for Realtime Updates
+# Youtube Websocket for Realtime Updates using NodeJS
 <table>
 <tr>
 <td>
