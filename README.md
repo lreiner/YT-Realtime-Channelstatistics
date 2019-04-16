@@ -106,7 +106,7 @@ export class ChannelStatisticsProvider {
 ```
 To use this provider anywhere in your project just inport it and declare it in your constructor like this:
 ```javascript
-import { ChannelStatisticsProvider } from '../../providers/channelstatistics/channelstatistics';
+import { ChannelStatisticsProvider } from '<path-to-your-service-file>';
 
 constructor(public channelProv: ChannelStatisticsProvider) {}
 ```
