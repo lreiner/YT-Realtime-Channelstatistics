@@ -56,16 +56,23 @@ function getChannelStats(channelID, callback) {
     request({uri: "http://youtube.com/channel/" + channelID}, function(error, response, body) {
         if(body) {
             var subArr = body.match(/<span class=\"yt-subscription-button-subscriber-count-branded-horizontal(.*?)\">(.*?)<\/span>/s) || [null];
-            channelStatistics.subcount = cleaner(subArr[2]);
+
+            if(!(subArr[2] === undefined)) {
+                channelStatistics.subcount = cleaner(subArr[2]);
+            }
 
             request({uri: "http://youtube.com/channel/" + channelID + "/about"}, function(error, response, body) {
                 if(body) {
-                    var viewArr = body.match(/<b>(.*?)<\/b> views/) || [null],
-                        views = viewArr[0].replace(' views','');
-        
-                    channelStatistics.viewcount = cleaner(extractContent(views));
+                    var viewArr = body.match(/<b>(.*?)<\/b> views/) || [null];
+              
+                    if(!(viewArr[0] === undefined)) {
+                        var views = viewArr[0].replace(' views','');
+                        channelStatistics.viewcount = cleaner(extractContent(views));
+                    }
 
-                    callback(channelStatistics);
+                    if(!((subArr[2] === undefined) || (viewArr[0] === undefined))) {
+                        callback(channelStatistics);
+                    }
                 }
             });
         }
