@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "Websocket for the PHP Youtube API",
     "dependencies": {
-        "express": "^4.16.4",
+        "express": "^4.17.3",
         "jquery": "^3.5.0",
         "request": "^2.88.0",
         "socket.io": "^2.2.0",
